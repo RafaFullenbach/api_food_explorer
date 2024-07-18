@@ -16,10 +16,10 @@ class UsersController {
   };
 
   update = async (request, response) => {
-    const { name, email } = request.body;
+    const { name, email, password, old_password } = request.body;
     const { id } = request.params;
 
-    await this.userService.update({ name, email, id });
+    await this.userService.update({ name, email, password, old_password, id });
 
     return response.status(201).json();
   };
