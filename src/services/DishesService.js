@@ -31,6 +31,34 @@ class DishesService {
   delete = async (id) => {
     await this.dishesRepository.deleteDish(id);
   };
+
+  index = async ({ name, ingredients }) => {
+    let dishes;
+
+    if (ingredients) {
+      const filterIngredients = ingredients
+        .split(",")
+        .map((ingredient) => ingredient.trim());
+
+      dishes = await this.dishesRepository.showFilteredIngredients({name, filterIngredients});
+
+    } else {
+
+      dishes = await this.dishesRepository.showAllDishes(name);
+    }
+
+    const allIngredients = await this.dishesRepository.showAllIngredients();
+    const dishesWithIngredients = dishes.map(dish => {
+      const dishesIngredients = allIngredients.filter(ingredient => ingredient.dish_id === dish.id);
+
+      return {
+        ...dish,
+        ingredients: dishesIngredients
+      }
+    });
+
+    return dishesWithIngredients;
+  };
 }
 
 module.exports = DishesService;

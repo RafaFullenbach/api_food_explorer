@@ -36,6 +36,14 @@ class DishesController {
 
     return response.json();
   };
+
+  index = async (request, response) => {
+    const { name, ingredients } = request.query;
+
+    const dishes = await this.dishesService.index({ name, ingredients });
+
+    return response.json(dishes);
+  };
 }
 
 module.exports = DishesController;

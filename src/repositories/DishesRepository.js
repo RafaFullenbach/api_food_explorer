@@ -19,9 +19,9 @@ class DishesRepository {
   };
 
   showDish = async (id) => {
-    const dishes = await knex("dishes").where({ id }).first();
+    const dish = await knex("dishes").where({ id }).first();
 
-    return dishes;
+    return dish;
   };
 
   showIngredients = async (id) => {
@@ -33,8 +33,31 @@ class DishesRepository {
   };
 
   deleteDish = async (id) => {
-    await knex("dishes").where({id: id}).delete();
+    await knex("dishes").where({ id: id }).delete();
   };
+
+  showAllDishes = async (name) => {
+    const dishes = await knex("dishes").select().whereLike("name", `%${name}%`);
+
+    return dishes;
+  };
+
+  showFilteredIngredients = async ({ name, filterIngredients }) => {
+    const dishes = await knex("ingredients")
+      .select(["dishes.id", "dishes.name"])
+      .whereLike("dishes.name", `%${name}%`)
+      .whereIn("ingredients.name", filterIngredients)
+      .innerJoin("dishes", "dishes.id", "ingredients.dish_id")
+      .orderBy("dishes.name");
+
+    return dishes;
+  };
+
+  showAllIngredients = async () => {
+    const ingredients = await knex("ingredients");
+
+    return ingredients;
+  }
 }
 
 module.exports = DishesRepository;
