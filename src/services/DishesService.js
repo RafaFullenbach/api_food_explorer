@@ -22,10 +22,11 @@ class DishesService {
 
   };
 
-  show = async() => {
-    const dishes = await this.dishesRepository.showDishes();
+  show = async(id) => {
+    const dish = await this.dishesRepository.showDish(id);
+    const ingredients = await this.dishesRepository.showIngredients(id);
 
-    return dishes;
+    return { ...dish, ingredients };
   }
 }
 

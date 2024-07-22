@@ -22,10 +22,11 @@ class DishesController {
   };
 
   show = async (request, response) => {
+    const { id } = request.params;
 
-    const dishes = await this.dishesService.show();
+    const dish = await this.dishesService.show(id);
 
-    return response.json(dishes);
+    return response.json(dish);
   }
 }
 
