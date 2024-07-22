@@ -18,6 +18,13 @@ class DishesRepository {
         await knex("ingredients").insert(ingredient);
     });
   }
+
+  showDishes = async() => {
+    
+    const dishes = await knex("dishes");
+
+    return dishes;
+  }
 }
 
 module.exports = DishesRepository;

@@ -20,6 +20,13 @@ class DishesController {
 
     return response.status(201).json();
   };
+
+  show = async (request, response) => {
+
+    const dishes = await this.dishesService.show();
+
+    return response.json(dishes);
+  }
 }
 
 module.exports = DishesController;

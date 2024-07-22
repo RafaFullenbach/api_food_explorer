@@ -21,6 +21,12 @@ class DishesService {
     await this.dishesRepository.createIngredients(ingredientsInsert);
 
   };
+
+  show = async() => {
+    const dishes = await this.dishesRepository.showDishes();
+
+    return dishes;
+  }
 }
 
 module.exports = DishesService;
