@@ -27,7 +27,15 @@ class DishesController {
     const dish = await this.dishesService.show(id);
 
     return response.json(dish);
-  }
+  };
+
+  delete = async (request, response) => {
+    const { id } = request.params;
+
+    await this.dishesService.delete(id);
+
+    return response.json();
+  };
 }
 
 module.exports = DishesController;

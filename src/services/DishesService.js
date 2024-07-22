@@ -11,23 +11,26 @@ class DishesService {
       category,
     });
 
-    const ingredientsInsert = ingredients.map(name => {
-        return {
-            name,
-            dish_id
-        }
+    const ingredientsInsert = ingredients.map((name) => {
+      return {
+        name,
+        dish_id,
+      };
     });
 
     await this.dishesRepository.createIngredients(ingredientsInsert);
-
   };
 
-  show = async(id) => {
+  show = async (id) => {
     const dish = await this.dishesRepository.showDish(id);
     const ingredients = await this.dishesRepository.showIngredients(id);
 
     return { ...dish, ingredients };
-  }
+  };
+
+  delete = async (id) => {
+    await this.dishesRepository.deleteDish(id);
+  };
 }
 
 module.exports = DishesService;
