@@ -44,6 +44,15 @@ class DishesController {
 
     return response.json(dishes);
   };
+
+  update = async (request, response) => {
+    const { name, category, description, price, ingredients } = request.body;
+    const { id } = request.params;
+
+    await this.dishesService.update({ id, name, category, description, price, ingredients });
+
+    return response.status(201).json();
+  };
 }
 
 module.exports = DishesController;

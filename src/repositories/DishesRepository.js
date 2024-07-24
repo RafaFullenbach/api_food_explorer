@@ -14,6 +14,7 @@ class DishesRepository {
 
   createIngredients = async (ingredients) => {
     ingredients.map(async (ingredient) => {
+      
       await knex("ingredients").insert(ingredient);
     });
   };
@@ -58,6 +59,20 @@ class DishesRepository {
 
     return ingredients;
   }
+
+  updateDish = async (dish, addIngredients, removeIngredients) => {
+    await knex("dishes").update(dish).where({ id: dish.id });
+
+    this.createIngredients(addIngredients);
+
+    this.deleteIngredient(removeIngredients);
+  }
+
+  deleteIngredient = async(ingredientsId) => {
+    ingredientsId.map(async (id) => {
+      await knex("ingredients").where({ id: id }).delete();
+    });
+  };
 }
 
 module.exports = DishesRepository;
